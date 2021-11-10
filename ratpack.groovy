@@ -7,13 +7,19 @@
 
 import static ratpack.groovy.Groovy.ratpack
 
+String readFileString(String filePath) {
+    def file = new File(filePath)
+    return file.text
+}
+
 ratpack {
     handlers {
         get {
             render "Hello World!"
         }
-        get(":name") {
-            render "Hello $pathTokens.name!"
+        get(":filename") {
+            def content = readFileString "$pathTokens.filename"
+            render content 
         }
     }
 }
